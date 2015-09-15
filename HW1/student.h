@@ -19,17 +19,12 @@ class Student
 	int _id;
 	
 	public:
-	Student():_name(""),_id(0) // Default C'tor
+	Student():_name(""),_id(0) // Default ctor
 	{}
-	Student(string name, unsigned int id):_name(name),_id(id) // 2 parameter C'tor
-	{}
-	
-	Student(const Student &S):_name(S._name),_id(S._id) //Copy C'tor
+	Student(string name, unsigned int id):_name(name),_id(id) // 2 parameter ctor
 	{}
 	
-	//Student & operator=(const Student &rhs); //Copy assignment
-	
-	//Compiler generated D'tor used 
+	//Compiler generated  copy ctor, copy=, dctor used 
 	
 	//Get member functions 
 	string getName() const; 
