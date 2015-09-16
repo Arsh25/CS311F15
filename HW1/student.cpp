@@ -2,6 +2,7 @@
  * student.cpp
  * Arsh Chauhan
  * 09/15/2015
+ * Edited: 09/16/2015
  * Source for class Student
  */
 
@@ -40,21 +41,18 @@ void Student::setName(string name)
 }
 
 /* setID
- * Pre: id is an unsigned int (Max. 8 digits)
- * Post: _id == id, if id is positive and at most 8 digits 
+ * Pre: 0<=_id<=99,999,999
+ * Post: _id == id
 */
 void Student::setID(int id)
-{
-	if(validID()) // Check if id is >0 and at most 8 digits 
+{ 
 	_id=id;
-	else
-	cout << "Invalid ID: Must be positive and at most 8 digits";
 }
 
 /* toString
  * Pre: None
  * Post:
- * 	  Return is a string giving the student information as _name (_id), _id is padded
+ * 	  Return is a string giving the student information as "_name (_id)", _id is padded
  *    on the left with zeros
 */
 string Student::toString() const
@@ -62,10 +60,14 @@ string Student::toString() const
 	 
 	
 	string idStr; // String representation of _id
+	int length = 1;
+	int id=_id;
+	while(id /= 10) // Keep moving the decimal point until division by 10 returns 0
+		length++;
 	
-	if(idLen() < 8) //Append zeros if _id < 8 digits 
+	if(length < 8) //Append zeros if _id < 8 digits 
 	 {
-		 int diff = 8 - idLen();
+		 int diff = 8 - length;
 		 for(int i = 0; i < diff; i++)
 		 {
 			 idStr += '0'; //Append leading zeros
@@ -112,8 +114,7 @@ bool operator!= (const Student &lhs, const Student &rhs)
 /* Stream insertion op for Student
  * Pre: None
  * Post: 
- * 		Srting form of Student object ( as returned by .toString()) has
- * 		been printed to the given stream
+ * 		String form of Student object ( as returned by .toString()) has been printed to the given stream.
  * 		Returns the given stream
  */
 ostream &operator<< (ostream &str, const Student &s)
