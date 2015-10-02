@@ -1,7 +1,7 @@
 /*
  * Arsh Chauhan
  * 09/29/2015
- * Edited: 
+ * Edited: 10/01/2015 
  * da3.cpp
  * Source file for Assignment 3 Functions
  */ 
@@ -9,7 +9,7 @@
 #include "da3.h"  // For Assignment 3 prototypes & templates
 
 /*gcd: Calcuates the gcd of 2 integers 
- *Pre: a,b >= 0
+ *Pre: a,b >= 0, a and b are not both 0
  *Post: Returns the gcd of 2 integers
  *Does not throw
  */ 

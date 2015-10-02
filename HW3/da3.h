@@ -1,7 +1,7 @@
 /*
  * Arsh Chauhan
  * 09/29/2015
- * Edited: 
+ * Edited: 10/01/2015
  * da3.h
  * Header file for Assignment 3 Functions
  */ 
@@ -70,6 +70,7 @@ struct LLNode {                                                     // *
 /*listItem: Function takes an LLNode and index.
  * Pre: index must be a valid std::size_t
  * Post: If index is valid, then returns the data in that node
+ * Requirement on Types: None 
  */ 
 template <typename ValueType>
 ValueType listItem(const LLNode<ValueType> * head,
@@ -105,6 +106,7 @@ ValueType listItem(const LLNode<ValueType> * head,
  * 		threw must be a valid boolean
  * Post: Runs function f if no exception is thrown.
  *       Sets threw=true and rethrows, if any exception is thrown by f
+ * Requirement on types: None
  */ 
 template <typename Func>
 void didItThrow(Func f,
@@ -125,8 +127,10 @@ void didItThrow(Func f,
 }
 
 /*countUnique: Counts the number of unique elements in a range 
- * Pre: RAITer must have operator-,operator=,operator==,operator<
+ * Pre: Parameters first and last specify a valid range
  * Post: Returns the number of unique elements in the passed range
+ * Requirements on types:
+ * 		RAITer must have operator-,operator=,operator==,operator<
  */ 
 template <typename RAITer>
 size_t countUnique(RAITer first,
