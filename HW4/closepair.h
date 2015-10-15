@@ -83,51 +83,66 @@ pair <size_t,size_t> closepairRecurse (RAIter first, RAIter last)
 		if(size%2 == 0)
 		middle=size/2;
 		else
-		middle=((int)(size/2)+1);
+		middle=(size/2)+1;
 		
-		double pivot = points[middle].second;
-		RAIter pivotIter = first+middle;
-		closestPair1 = closepairRecurse(first,pivotIter);
-		closestPair2 = closepairRecurse(pivotIter,last);
+		double pivot = points[middle].second; //This does not match the algorithm
+		
+		vector<Pt2D> LHL,RHL;
+		for(size_t i=0; i<size; ++i)
+		{
+			if(points[i].second<pivot)
+				LHL.push_back(*(first+i));
+			else
+				RHL.push_back(*(first+i));
+		}
+		
+				
+		
+		
+		closestPair1 = closepairRecurse(LHL.begin(),LHL.end());
+		closestPair2 = closepairRecurse(RHL.begin(),RHL.end());
 		if(closestPair2 <= closestPair1)
 			closestPair1 = closestPair2;
-		double closestdist = pow((closestPair2.first-closestPair1.first),2) + pow((closestPair2.second-closestPair1.second),2);
-		double split1 = pivot + closestdist;
-		double split2 = pivot - closestdist;
+		double closestDist = pow((closestPair2.first-closestPair1.first),2) + pow((closestPair2.second-closestPair1.second),2);
+		double split1 = pivot + closestDist;
+		double split2 = pivot - closestDist;
 		
 		vector<Pt2D>L;
-		vector<Pt2D> indicesL; //Indices of list L
+		vector<size_t>indicesL;
 		
-		for(size_t i = 0; i < size; ++i)
+		for (size_t i = 0; i < (last-first); ++i)
 		{
 			if(points[i].second>split1 && points[i].second<split2)
-			L.push_back(points[i]);
+			{
+				indicesL.push_back(i);
+				L.push_back(*(first+i));
+			}
 		}
 		sort(L.begin(),L.end(),
 			[](const Pt2D & a, const Pt2D & b)  // Unnamed function
 			{ return a.first < b.first; }
 			);
-		
-		for (size_t i = 0; i < L.size(); ++i)
-		{
-			indicesL.push_back(*(L.begin()+i));
-		}
-	
+		sort(indicesL.begin(),indicesL.end(),
+			[=](const size_t & a, const size_t & b)  // Unnamed function
+			{ return L[a].first < L[b].first; }
+			);
+			 
 	//Iterate through list L and find distance between each point and the next 5
-		/*for(auto i=L.begin(); i!=L.end()-5;++i)
+		for(size_t i=0; i<L.end()-L.begin();++i)
 		{
-			Pt2D pt1 = *i;
-			cout<<"######"<<pt1.first;
 			for(int j=1; j<=5;j++)
 			{
-				//double x1 = pt1[1].first;
-				//double dist = pow(,2) + pow(,2);
-			}
+				double dist = pow((L[i+j].first-L[i].first),2) + pow((L[i+j].second-L[i].second),2);
+				if(dist<closestDist)
+				closestPair1=make_pair(i+j,i);
+			}	
 		}
-	}*/
-	return make_pair(3,2); //Dummy return
+		return closestPair1; //Dummy return
 	}
+	
+	
 }
+
 
 template<typename RAIter>
 pair <size_t, size_t> closePair(RAIter first, RAIter last)
